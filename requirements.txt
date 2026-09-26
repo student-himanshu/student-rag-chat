@@ -1,0 +1,43 @@
+# ============================================================
+# Student RAG Chat — requirements.txt
+# Every package below was installed together in a clean venv and
+# import-tested on 2026-09-26. Versions are pinned to what was
+# actually verified so this file is reproducible.
+# ============================================================
+
+# --- Web UI --------------------------------------------------
+streamlit==1.64.0
+
+# --- Gemini LLM + Gemini embeddings ---------------------------
+# Official LangChain <-> Google partner package. Actively maintained,
+# built on Google's current `google-genai` SDK (installed transitively).
+# Provides ChatGoogleGenerativeAI and GoogleGenerativeAIEmbeddings.
+langchain-google-genai==4.4.0
+
+# --- Chunking --------------------------------------------------
+# Standalone, actively-maintained LangChain package for
+# RecursiveCharacterTextSplitter. Also pulls in langchain-core, which
+# gives us the Document class used to carry chunk text + metadata.
+langchain-text-splitters==1.1.2
+
+# --- PDF text extraction ----------------------------------------
+# Import as `import pymupdf` (NOT `import fitz` — that alias is
+# deprecated by the maintainers as of this version).
+pymupdf==1.28.2
+
+# --- Vector similarity search -------------------------------------
+# We call faiss-cpu directly through our own thin wrapper in
+# src/vector_store.py instead of langchain_community.vectorstores.FAISS.
+# Reason: the langchain-community package was officially sunset/archived
+# in 2026 and, per its maintainers, no standalone FAISS partner package
+# has been published to replace it. Depending on faiss-cpu directly
+# avoids building on a frozen, deprecated dependency.
+faiss-cpu==1.15.1
+numpy==2.5.3
+
+# --- Configuration ------------------------------------------------
+python-dotenv==1.2.3
+
+# --- Testing --------------------------------------------------------
+pytest==9.1.1
+pytest-mock==3.15.1
